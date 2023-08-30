@@ -2,65 +2,110 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Beispiel für Summe durch Knöpfe</title>
+  <title>Christbahndl</title>
   <style>
     button {
-      width: 100px;
+      font-size: 24px;
+      width: 150px;
       height: 100px;
-      font-size: 16px;
       margin: 5px;
     }
-    #result {
+    #resetButton {
+      font-size: 24px;
+      width: 100%;
+      height: 100px;
+    }
+    #sum {
       font-size: 48px;
     }
+    .itemButton {
+      font-size: 20px;
+    }
   </style>
-  <script>
-    let sum = 0;
-    let selectedItems = {};
-
-    function addToSum(value, label) {
-      sum += value;
-      selectedItems[label] = (selectedItems[label] || 0) + 1;
-      document.getElementById('result').innerHTML = `Gesamt: ${sum.toFixed(2)}€`;
-      updateSelectedItems();
-    }
-
-    function resetSum() {
-      sum = 0;
-      selectedItems = {};
-      document.getElementById('result').innerHTML = `Gesamt: ${sum.toFixed(2)}€`;
-      updateSelectedItems();
-    }
-
-    function updateSelectedItems() {
-      const list = document.getElementById('selectedItems');
-      list.innerHTML = '';
-      for (const [label, count] of Object.entries(selectedItems)) {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${label} (Anzahl: ${count})`;
-        list.appendChild(listItem);
-      }
-    }
-  </script>
 </head>
 <body>
-  <button onclick="resetSum()">Zurücksetzen</button>
-  <h1>Klicken Sie auf die Knöpfe, um die Gesamtsumme zu erhalten:</h1>
 
-  <button onclick="addToSum(1.00, 'Artikel 1')">Artikel 1<br>1,00€</button>
-  <button onclick="addToSum(2.00, 'Artikel 2')">Artikel 2<br>2,00€</button>
-  <button onclick="addToSum(3.00, 'Artikel 3')">Artikel 3<br>3,00€</button>
-  <button onclick="addToSum(4.00, 'Artikel 4')">Artikel 4<br>4,00€</button>
-  <button onclick="addToSum(5.00, 'Artikel 5')">Artikel 5<br>5,00€</button>
-  <button onclick="addToSum(6.00, 'Artikel 6')">Artikel 6<br>6,00€</button>
-  <button onclick="addToSum(7.00, 'Artikel 7')">Artikel 7<br>7,00€</button>
-  <button onclick="addToSum(8.00, 'Artikel 8')">Artikel 8<br>8,00€</button>
-  <button onclick="addToSum(9.00, 'Artikel 9')">Artikel 9<br>9,00€</button>
-  <button onclick="addToSum(10.00, 'Artikel 10')">Artikel 10<br>10,00€</button>
+  <button id="resetButton" onclick="resetSelection()">Zurücksetzen</button>
 
-  <p id="result">Gesamt: 0,00€</p>
-  <p>Ausgewählte Artikel:</p>
-  <ul id="selectedItems">
-  </ul>
+  <h1>Getränke</h1>
+  <div id="drinks">
+    <!-- 10 sample drinks -->
+    <button data-price="100" onclick="addItem('Getränk 1', 100)">Getränk 1<br>1,00€</button>
+    <button data-price="200" onclick="addItem('Getränk 2', 200)">Getränk 2<br>2,00€</button>
+    <button data-price="150" onclick="addItem('Getränk 3', 150)">Getränk 3<br>1,50€</button>
+    <button data-price="250" onclick="addItem('Getränk 4', 250)">Getränk 4<br>2,50€</button>
+    <button data-price="300" onclick="addItem('Getränk 5', 300)">Getränk 5<br>3,00€</button>
+    <button data-price="350" onclick="addItem('Getränk 6', 350)">Getränk 6<br>3,50€</button>
+    <button data-price="400" onclick="addItem('Getränk 7', 400)">Getränk 7<br>4,00€</button>
+    <button data-price="450" onclick="addItem('Getränk 8', 450)">Getränk 8<br>4,50€</button>
+    <button data-price="500" onclick="addItem('Getränk 9', 500)">Getränk 9<br>5,00€</button>
+    <button data-price="550" onclick="addItem('Getränk 10', 550)">Getränk 10<br>5,50€</button>
+  </div>
+
+  <h1>Essen</h1>
+  <div id="food">
+    <!-- 10 sample dishes -->
+    <button data-price="500" onclick="addItem('Gericht 1', 500)">Gericht 1<br>5,00€</button>
+    <button data-price="700" onclick="addItem('Gericht 2', 700)">Gericht 2<br>7,00€</button>
+    <button data-price="600" onclick="addItem('Gericht 3', 600)">Gericht 3<br>6,00€</button>
+    <button data-price="750" onclick="addItem('Gericht 4', 750)">Gericht 4<br>7,50€</button>
+    <button data-price="800" onclick="addItem('Gericht 5', 800)">Gericht 5<br>8,00€</button>
+    <button data-price="850" onclick="addItem('Gericht 6', 850)">Gericht 6<br>8,50€</button>
+    <button data-price="900" onclick="addItem('Gericht 7', 900)">Gericht 7<br>9,00€</button>
+    <button data-price="950" onclick="addItem('Gericht 8', 950)">Gericht 8<br>9,50€</button>
+    <button data-price="1000" onclick="addItem('Gericht 9', 1000)">Gericht 9<br>10,00€</button>
+    <button data-price="1050" onclick="addItem('Gericht 10', 1050)">Gericht 10<br>10,50€</button>
+  </div>
+
+  <h1>Gesamtsumme</h1>
+  <div id="sum">0,00€</div>
+
+  <h1>Ausgewählte Artikel</h1>
+  <div id="selectedItems"></div>
+
+  <script>
+    let totalSum = 0;
+    let itemCounts = {};
+
+    function addItem(name, price) {
+      totalSum += price;
+      document.getElementById('sum').innerText = (totalSum / 100).toFixed(2) + '€';
+
+      if (!itemCounts[name]) {
+        itemCounts[name] = { count: 0, price: price };
+      }
+      itemCounts[name].count++;
+
+      renderSelectedItems();
+    }
+
+    function removeItem(name, price) {
+      if (itemCounts[name] && itemCounts[name].count > 0) {
+        totalSum -= price;
+        itemCounts[name].count--;
+        if (itemCounts[name].count === 0) {
+          delete itemCounts[name];
+        }
+      }
+
+      document.getElementById('sum').innerText = (totalSum / 100).toFixed(2) + '€';
+      renderSelectedItems();
+    }
+
+    function renderSelectedItems() {
+      let itemList = '';
+      for (const [name, item] of Object.entries(itemCounts)) {
+        itemList += `<button class="itemButton" onclick="removeItem('${name}', ${item.price})">${name} (x${item.count})</button><br>`;
+      }
+      document.getElementById('selectedItems').innerHTML = itemList;
+    }
+
+    function resetSelection() {
+      totalSum = 0;
+      itemCounts = {};
+      document.getElementById('sum').innerText = '0,00€';
+      document.getElementById('selectedItems').innerHTML = '';
+    }
+  </script>
 </body>
 </html>
