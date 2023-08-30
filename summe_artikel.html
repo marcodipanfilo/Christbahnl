@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Beispiel für Summe durch Knöpfe</title>
+  <style>
+    button {
+      width: 100px;
+      height: 100px;
+      font-size: 16px;
+      margin: 5px;
+    }
+    #result {
+      font-size: 48px;
+    }
+  </style>
+  <script>
+    let sum = 0;
+    let selectedItems = {};
+
+    function addToSum(value, label) {
+      sum += value;
+      selectedItems[label] = (selectedItems[label] || 0) + 1;
+      document.getElementById('result').innerHTML = `Gesamt: ${sum.toFixed(2)}€`;
+      updateSelectedItems();
+    }
+
+    function resetSum() {
+      sum = 0;
+      selectedItems = {};
+      document.getElementById('result').innerHTML = `Gesamt: ${sum.toFixed(2)}€`;
+      updateSelectedItems();
+    }
+
+    function updateSelectedItems() {
+      const list = document.getElementById('selectedItems');
+      list.innerHTML = '';
+      for (const [label, count] of Object.entries(selectedItems)) {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${label} (Anzahl: ${count})`;
+        list.appendChild(listItem);
+      }
+    }
+  </script>
+</head>
+<body>
+  <button onclick="resetSum()">Zurücksetzen</button>
+  <h1>Klicken Sie auf die Knöpfe, um die Gesamtsumme zu erhalten:</h1>
+
+  <button onclick="addToSum(1.00, 'Artikel 1')">Artikel 1<br>1,00€</button>
+  <button onclick="addToSum(2.00, 'Artikel 2')">Artikel 2<br>2,00€</button>
+  <button onclick="addToSum(3.00, 'Artikel 3')">Artikel 3<br>3,00€</button>
+  <button onclick="addToSum(4.00, 'Artikel 4')">Artikel 4<br>4,00€</button>
+  <button onclick="addToSum(5.00, 'Artikel 5')">Artikel 5<br>5,00€</button>
+  <button onclick="addToSum(6.00, 'Artikel 6')">Artikel 6<br>6,00€</button>
+  <button onclick="addToSum(7.00, 'Artikel 7')">Artikel 7<br>7,00€</button>
+  <button onclick="addToSum(8.00, 'Artikel 8')">Artikel 8<br>8,00€</button>
+  <button onclick="addToSum(9.00, 'Artikel 9')">Artikel 9<br>9,00€</button>
+  <button onclick="addToSum(10.00, 'Artikel 10')">Artikel 10<br>10,00€</button>
+
+  <p id="result">Gesamt: 0,00€</p>
+  <p>Ausgewählte Artikel:</p>
+  <ul id="selectedItems">
+  </ul>
+</body>
+</html>
