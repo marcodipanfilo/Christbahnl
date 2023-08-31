@@ -50,7 +50,6 @@
 <body>
 
 <div id="mainContent">
-  <button id="resetButton" onclick="resetSelection()">Zurücksetzen</button>
 
   <h1>Getränke</h1>
   <div id="drinks">
@@ -84,7 +83,9 @@
 </div>
 
 <div class="fixed">
-  <h1>Gesamtsumme</h1>
+  <button id="resetButton" onclick="resetSelection()">Zurücksetzen</button>
+
+  <h1>Gesamt</h1>
   <div id="sum">0,00€</div>
 
   <h1>Ausgewählte Artikel</h1>
@@ -143,6 +144,7 @@
       }
       lastTouchEnd = now;
     }, false);
+
   </script>
 </body>
 </html>
