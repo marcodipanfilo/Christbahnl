@@ -67,7 +67,7 @@
     let totalPrice = 0;
 
     // Fetch items from JSON and populate the menu
-    fetch('menu.json')
+    fetch('./menu.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
