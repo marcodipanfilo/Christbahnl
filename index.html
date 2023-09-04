@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Christbahndl</title>
   <style>
-    /* Existing Styles */
     button {
       font-size: 24px;
       width: 150px;
@@ -13,104 +13,109 @@
       margin: 5px;
       touch-action: manipulation;
     }
-    #resetButton, #sum {
+
+    #resetButton {
       font-size: 24px;
       width: 100%;
       height: 100px;
     }
+
     #sum {
       font-size: 48px;
     }
+
     .itemButton {
       font-size: 20px;
       display: inline-block;
       margin-right: 5px;
     }
+
     #selectedItems {
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
     }
 
-    /* Desktop styles */
     .fixed {
       position: fixed;
       top: 0;
       right: 0;
       width: 33.333%;
+      /* 1/3 of the page width */
       height: 100%;
+      /* Takes up the full height of the page */
       background-color: white;
+      /* To ensure content visibility */
       padding: 10px;
       z-index: 1;
       overflow-y: auto;
-    }
-    #mainContent {
-      width: 66.667%;
-      margin-right: 33.333%;
+      /* Enable scroll if content overflows */
     }
 
-    /* Mobile styles */
-    @media only screen and (max-width: 767px) {
-      #mainContent, .fixed {
-        width: 100%;
-        margin-right: 0;
-      }
-      #drinks, #food {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      }
-      #drinks button, #food button {
-        flex: 0 0 calc(50% - 10px);
-        margin: 5px;
-      }
+    #mainContent {
+      width: 66.667%;
+      /* Remaining 2/3 of the page */
+      margin-right: 33.333%;
+      /* Prevent overlap with the fixed column */
+    }
+
+    #drinks, #food {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between; /* Adjusts the spacing to fill the width */
+    }
+    #drinks button, #food button {
+      flex: 0 0 calc(50% - 10px); /* Takes up half the width minus the margin */
+      margin: 5px;
     }
   </style>
 </head>
+
 <body>
 
-<div id="mainContent">
+  <div id="mainContent">
 
-  <h1>Getränke</h1>
-  <div id="drinks">
-    <!-- 10 sample drinks -->
-    <button data-price="100" onclick="addItem('Getränk 1', 100)">Getränk 1<br>1,00€</button>
-    <button data-price="200" onclick="addItem('Getränk 2', 200)">Getränk 2<br>2,00€</button>
-    <button data-price="150" onclick="addItem('Getränk 3', 150)">Getränk 3<br>1,50€</button>
-    <button data-price="250" onclick="addItem('Getränk 4', 250)">Getränk 4<br>2,50€</button>
-    <button data-price="300" onclick="addItem('Getränk 5', 300)">Getränk 5<br>3,00€</button>
-    <button data-price="350" onclick="addItem('Getränk 6', 350)">Getränk 6<br>3,50€</button>
-    <button data-price="400" onclick="addItem('Getränk 7', 400)">Getränk 7<br>4,00€</button>
-    <button data-price="450" onclick="addItem('Getränk 8', 450)">Getränk 8<br>4,50€</button>
-    <button data-price="500" onclick="addItem('Getränk 9', 500)">Getränk 9<br>5,00€</button>
-    <button data-price="550" onclick="addItem('Getränk 10', 550)">Getränk 10<br>5,50€</button>
+    <h1>Getränke</h1>
+    <div id="drinks">
+      <!-- 10 sample drinks -->
+      <button data-price="100" onclick="addItem('Getränk 1', 100)">Getränk 1<br>1,00€</button>
+      <button data-price="200" onclick="addItem('Getränk 2', 200)">Getränk 2<br>2,00€</button>
+      <button data-price="150" onclick="addItem('Getränk 3', 150)">Getränk 3<br>1,50€</button>
+      <button data-price="250" onclick="addItem('Getränk 4', 250)">Getränk 4<br>2,50€</button>
+      <button data-price="300" onclick="addItem('Getränk 5', 300)">Getränk 5<br>3,00€</button>
+      <button data-price="350" onclick="addItem('Getränk 6', 350)">Getränk 6<br>3,50€</button>
+      <button data-price="400" onclick="addItem('Getränk 7', 400)">Getränk 7<br>4,00€</button>
+      <button data-price="450" onclick="addItem('Getränk 8', 450)">Getränk 8<br>4,50€</button>
+      <button data-price="500" onclick="addItem('Getränk 9', 500)">Getränk 9<br>5,00€</button>
+      <button data-price="550" onclick="addItem('Getränk 10', 550)">Getränk 10<br>5,50€</button>
+    </div>
+
+    <h1>Essen</h1>
+    <div id="food">
+      <!-- 10 sample dishes -->
+      <button data-price="500" onclick="addItem('Gericht 1', 500)">Gericht 1<br>5,00€</button>
+      <button data-price="700" onclick="addItem('Gericht 2', 700)">Gericht 2<br>7,00€</button>
+      <button data-price="600" onclick="addItem('Gericht 3', 600)">Gericht 3<br>6,00€</button>
+      <button data-price="750" onclick="addItem('Gericht 4', 750)">Gericht 4<br>7,50€</button>
+      <button data-price="800" onclick="addItem('Gericht 5', 800)">Gericht 5<br>8,00€</button>
+      <button data-price="850" onclick="addItem('Gericht 6', 850)">Gericht 6<br>8,50€</button>
+      <button data-price="900" onclick="addItem('Gericht 7', 900)">Gericht 7<br>9,00€</button>
+      <button data-price="950" onclick="addItem('Gericht 8', 950)">Gericht 8<br>9,50€</button>
+      <button data-price="1000" onclick="addItem('Gericht 9', 1000)">Gericht 9<br>10,00€</button>
+      <button data-price="1050" onclick="addItem('Gericht 10', 1050)">Gericht 10<br>10,50€</button>
+    </div>
   </div>
 
-  <h1>Essen</h1>
-  <div id="food">
-    <!-- 10 sample dishes -->
-    <button data-price="500" onclick="addItem('Gericht 1', 500)">Gericht 1<br>5,00€</button>
-    <button data-price="700" onclick="addItem('Gericht 2', 700)">Gericht 2<br>7,00€</button>
-    <button data-price="600" onclick="addItem('Gericht 3', 600)">Gericht 3<br>6,00€</button>
-    <button data-price="750" onclick="addItem('Gericht 4', 750)">Gericht 4<br>7,50€</button>
-    <button data-price="800" onclick="addItem('Gericht 5', 800)">Gericht 5<br>8,00€</button>
-    <button data-price="850" onclick="addItem('Gericht 6', 850)">Gericht 6<br>8,50€</button>
-    <button data-price="900" onclick="addItem('Gericht 7', 900)">Gericht 7<br>9,00€</button>
-    <button data-price="950" onclick="addItem('Gericht 8', 950)">Gericht 8<br>9,50€</button>
-    <button data-price="1000" onclick="addItem('Gericht 9', 1000)">Gericht 9<br>10,00€</button>
-    <button data-price="1050" onclick="addItem('Gericht 10', 1050)">Gericht 10<br>10,50€</button>
+  <div id="totalAmount" class="fixed">
+    <button id="resetButton" onclick="resetSelection()">Zurücksetzen</button>
+
+    <h1>Gesamt</h1>
+    <div id="sum">0,00€</div>
+
+    <h1>Ausgewählte Artikel</h1>
+    <div id="selectedItems"></div>
   </div>
-</div>
 
-<div class="fixed">
-  <button id="resetButton" onclick="resetSelection()">Zurücksetzen</button>
-
-  <h1>Gesamt</h1>
-  <div id="sum">0,00€</div>
-
-  <h1>Ausgewählte Artikel</h1>
-  <div id="selectedItems"></div>
-</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
 
   <script>
@@ -157,21 +162,13 @@
       document.getElementById('selectedItems').innerHTML = '';
     }
 
-    // let lastTouchEnd = 0;
-    // document.addEventListener('touchend', function (event) {
-    //   const now = (new Date()).getTime();
-    //   if (now - lastTouchEnd <= 300) {
-    //     event.preventDefault();
-    //   }
-    //   lastTouchEnd = now;
-    // }, false);
-
     if ('addEventListener' in document) {
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', function () {
         FastClick.attach(document.body);
       }, false);
     }
 
   </script>
 </body>
+
 </html>
