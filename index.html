@@ -30,6 +30,7 @@
       font-size: 20px;
       display: inline-block;
       margin-right: 5px;
+      
     }
 
     #selectedItems {
@@ -137,10 +138,15 @@
       renderSelectedItems();
     }
 
+    function insertSoftHyphens(str, n) {
+      return str.replace(new RegExp(`(.{${n}})`, 'g'), "$1&shy;");
+    }
+
     function renderSelectedItems() {
       let itemList = '';
       for (const [name, item] of Object.entries(itemCounts)) {
-        itemList += `<button class="itemButton" onclick="removeItem('${name}', ${item.price})">${name} (x${item.count})</button><br>`;
+        const hyphenatedName = insertSoftHyphens(name, 10);
+        itemList += `<button id="${name.replace(/\s+/g, '')}-btn" class="itemButton" onclick="removeItem('${name}', ${item.price})">${hyphenatedName} (x${item.count})</button><br>`;
       }
       document.getElementById('selectedItems').innerHTML = itemList;
     }
@@ -157,6 +163,27 @@
         FastClick.attach(document.body);
       }, false);
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+        for(let i = 0; i < button.childNodes.length; i++) {
+          const child = button.childNodes[i];
+          // Only manipulate text nodes (nodeType === 3)
+          if (child.nodeType === 3 && child.nodeValue.trim().length > 0) {
+            let text = child.nodeValue;
+            if (text.length > 7) {
+              let parts = [];
+              for (let j = 0; j < text.length; j += 7) {
+                parts.push(text.slice(j, j + 7));
+              }
+              child.nodeValue = parts.join("­"); // inserted a soft hyphen between the quotes
+            }
+          }
+        }
+      });
+    });
+
 
   </script>
 </body>
