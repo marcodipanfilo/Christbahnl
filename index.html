@@ -11,7 +11,6 @@
       height: 100px;
       margin: 5px;
       touch-action: manipulation;
-      pointer-events: none;
     }
     #resetButton {
       font-size: 24px;
@@ -55,7 +54,7 @@
   <h1>Getränke</h1>
   <div id="drinks">
     <!-- 10 sample drinks -->
-    <button data-price="100" onclick="addItem('Getränk 1', 100)">Getränk 1<br>1,00€</button>
+    <button data-price="100" onclick="addItem('Getränk 1', 100)">Getränk 1<br>1,50€</button>
     <button data-price="200" onclick="addItem('Getränk 2', 200)">Getränk 2<br>2,00€</button>
     <button data-price="150" onclick="addItem('Getränk 3', 150)">Getränk 3<br>1,50€</button>
     <button data-price="250" onclick="addItem('Getränk 4', 250)">Getränk 4<br>2,50€</button>
@@ -92,7 +91,8 @@
   <h1>Ausgewählte Artikel</h1>
   <div id="selectedItems"></div>
 </div>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
   <script>
     let totalSum = 0;
     let itemCounts = {};
@@ -146,14 +146,11 @@
       lastTouchEnd = now;
     }, false);
 
-    document.addEventListener('touchend', function (event) {
-      event.preventDefault();  // Prevent any default action
-      const now = (new Date()).getTime();
-      if (now - lastTouchEnd <= 300) {
-        return;
-      }
-      lastTouchEnd = now;
-    }, false);
+    if ('addEventListener' in document) {
+      document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+      }, false);
+    }
 
   </script>
 </body>
