@@ -11,6 +11,7 @@
       height: 100px;
       margin: 5px;
       touch-action: manipulation;
+      pointer-events: none;
     }
     #resetButton {
       font-size: 24px;
@@ -141,6 +142,15 @@
       const now = (new Date()).getTime();
       if (now - lastTouchEnd <= 300) {
         event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+
+    document.addEventListener('touchend', function (event) {
+      event.preventDefault();  // Prevent any default action
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        return;
       }
       lastTouchEnd = now;
     }, false);
