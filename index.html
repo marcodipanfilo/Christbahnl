@@ -197,10 +197,12 @@
       totalPriceDiv.textContent = `€${totalPrice.toFixed(2)}`;
     }
 
-    document.getElementById('resetButton').addEventListener('click', function () {
-      selectedItems = {};
-      totalPrice = 0;
-      updateUI();
+    document.querySelectorAll('.reset-button').forEach(button => {
+      button.addEventListener('click', function () {
+        selectedItems = {};
+        totalPrice = 0;
+        updateUI();
+      });
     });
 
     if ('addEventListener' in document) {
