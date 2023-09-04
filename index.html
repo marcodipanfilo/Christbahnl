@@ -54,7 +54,7 @@
   <h1>Getränke</h1>
   <div id="drinks">
     <!-- 10 sample drinks -->
-    <button data-price="100" onclick="addItem('Getränk 1', 100)">Getränk 1<br>1,50€</button>
+    <button data-price="100" onclick="addItem('Getränk 1', 100)">Getränk 1<br>1,00€</button>
     <button data-price="200" onclick="addItem('Getränk 2', 200)">Getränk 2<br>2,00€</button>
     <button data-price="150" onclick="addItem('Getränk 3', 150)">Getränk 3<br>1,50€</button>
     <button data-price="250" onclick="addItem('Getränk 4', 250)">Getränk 4<br>2,50€</button>
@@ -137,14 +137,14 @@
       document.getElementById('selectedItems').innerHTML = '';
     }
 
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function (event) {
-      const now = (new Date()).getTime();
-      if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-      }
-      lastTouchEnd = now;
-    }, false);
+    // let lastTouchEnd = 0;
+    // document.addEventListener('touchend', function (event) {
+    //   const now = (new Date()).getTime();
+    //   if (now - lastTouchEnd <= 300) {
+    //     event.preventDefault();
+    //   }
+    //   lastTouchEnd = now;
+    // }, false);
 
     if ('addEventListener' in document) {
       document.addEventListener('DOMContentLoaded', function() {
