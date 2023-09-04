@@ -2,23 +2,16 @@
 <html>
 
 <head>
-  <meta charset="UTF-8" name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Christbahndl Speise- und Getränkekarte</title>
+  <meta charset="UTF-8">
+  <title>Menu</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-
     .container {
       display: flex;
-      flex-direction: row;
     }
 
     .menu {
       flex: 2;
       padding-right: 33.33%;
-      /* 1/3 of the container's width */
     }
 
     .menu-section {
@@ -33,40 +26,12 @@
       right: 0;
       width: 33.33%;
       height: 100%;
-      overflow: hidden;
-      background: rgba(224, 255, 255, 0.466);
-    }
-
-    .total-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .fixed-total {
-      z-index: 1;
-    }
-
-    .scrollable-items {
-      overflow-y: auto;
-      height: calc(100% - 60px);
+      background: lightgray;
     }
 
     .button {
-      flex: 1;
+      margin: 5px;
       padding: 10px;
-      margin: 5px;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    .selected-item {
-      display: flex;
-      justify-content: space-between;
-      margin: 5px;
-      padding: 5px;
-      border: 1px solid #ccc;
-      cursor: pointer;
     }
 
     .reset-button {
@@ -81,60 +46,15 @@
 <body>
 
   <div class="container">
-    <div class="menu">
-      <h2>Getränke</h2>
-      <div class="menu-section">
-        <button class="button" data-name="Apfelsaft" data-price="2.5">Apfelsaft - €2.5</button>
-        <button class="button" data-name="Vernatsch" data-price="5">Vernatsch - €5</button>
-        <button class="button" data-name="Lagrein" data-price="6">Lagrein - €6</button>
-        <button class="button" data-name="Schnaps" data-price="4">Schnaps - €4</button>
-        <button class="button" data-name="Grüner Veltliner" data-price="5">Grüner Veltliner - €5</button>
-        <!-- 10 More Drinks -->
-        <button class="button" data-name="Gewürztraminer" data-price="7">Gewürztraminer - €7</button>
-        <button class="button" data-name="Bier" data-price="3.5">Bier - €3.5</button>
-        <button class="button" data-name="Obstler" data-price="4.5">Obstler - €4.5</button>
-        <button class="button" data-name="Espresso" data-price="2">Espresso - €2</button>
-        <button class="button" data-name="Cappuccino" data-price="2.5">Cappuccino - €2.5</button>
-        <button class="button" data-name="Wasser" data-price="1.5">Wasser - €1.5</button>
-        <button class="button" data-name="Tee" data-price="2">Tee - €2</button>
-        <button class="button" data-name="Rotwein" data-price="6">Rotwein - €6</button>
-        <button class="button" data-name="Weißwein" data-price="6">Weißwein - €6</button>
-        <button class="button" data-name="Champagner" data-price="20">Champagner - €20</button>
-      </div>
-
-      <h2>Speisen</h2>
-      <div class="menu-section">
-        <button class="button" data-name="Knödel" data-price="8">Knödel - €8</button>
-        <button class="button" data-name="Speck" data-price="7">Speck - €7</button>
-        <button class="button" data-name="Schlutzkrapfen" data-price="9">Schlutzkrapfen - €9</button>
-        <button class="button" data-name="Kaiserschmarrn" data-price="6">Kaiserschmarrn - €6</button>
-        <button class="button" data-name="Gulasch" data-price="10">Gulasch - €10</button>
-        <!-- 15 More Foods -->
-        <button class="button" data-name="Wurst" data-price="5">Wurst - €5</button>
-        <button class="button" data-name="Apfelstrudel" data-price="4">Apfelstrudel - €4</button>
-        <button class="button" data-name="Marende" data-price="9">Marende - €9</button>
-        <button class="button" data-name="Ravioli" data-price="8">Ravioli - €8</button>
-        <button class="button" data-name="Schnitzel" data-price="11">Schnitzel - €11</button>
-        <button class="button" data-name="Spaghetti" data-price="7">Spaghetti - €7</button>
-        <button class="button" data-name="Pilzrisotto" data-price="9">Pilzrisotto - €9</button>
-        <button class="button" data-name="Pasta" data-price="8">Pasta - €8</button>
-        <button class="button" data-name="Suppe" data-price="4">Suppe - €4</button>
-        <button class="button" data-name="Käse" data-price="5">Käse - €5</button>
-        <button class="button" data-name="Brot" data-price="2">Brot - €2</button>
-        <button class="button" data-name="Fisch" data-price="12">Fisch - €12</button>
-        <button class="button" data-name="Gemüse" data-price="6">Gemüse - €6</button>
-        <button class="button" data-name="Huhn" data-price="10">Huhn - €10</button>
-        <button class="button" data-name="Rind" data-price="15">Rind - €15</button>
-      </div>
+    <div class="menu" id="menuDiv">
+      <!-- Menu items will be populated here -->
     </div>
 
     <div class="total">
-      <div class="fixed-total">
-        <button id="resetButton" class="reset-button">Alles zurücksetzen</button>
-        <div id="totalWrapper" class="total-wrapper">
-          <span>Gesamt:</span>
-          <h3 id="totalPrice">€0</h3>
-        </div>
+      <button id="resetButton" class="reset-button">Alles zurücksetzen</button>
+      <div id="totalPrice">
+        <div id="totalLabel">Gesamt:</div>
+        <div id="totalValue">€0</div>
       </div>
       <div class="scrollable-items" id="selectedItems"></div>
     </div>
@@ -146,63 +66,34 @@
     let selectedItems = {};
     let totalPrice = 0;
 
-    document.querySelectorAll('.button').forEach(button => {
-      button.addEventListener('click', function () {
-        const itemName = this.getAttribute('data-name');
-        const itemPrice = parseFloat(this.getAttribute('data-price'));
-
-        totalPrice += itemPrice;
-
-        if (selectedItems[itemName]) {
-          selectedItems[itemName].count++;
-        } else {
-          selectedItems[itemName] = { count: 1, itemPrice: itemPrice };
-        }
-
-        updateUI();
-      });
-    });
-
-    function updateUI() {
-      const selectedItemsDiv = document.getElementById('selectedItems');
-      const totalPriceDiv = document.getElementById('totalPrice');
-
-      selectedItemsDiv.innerHTML = '';
-
-      for (const [itemName, itemInfo] of Object.entries(selectedItems)) {
-        const div = document.createElement('div');
-        div.className = 'selected-item';
-        div.innerHTML = `${itemName} x${itemInfo.count} <span>-</span>`;
-        div.addEventListener('click', function () {
-          itemInfo.count--;
-          totalPrice -= itemInfo.itemPrice;
-
-          if (itemInfo.count === 0) {
-            delete selectedItems[itemName];
-          }
-
-          updateUI();
-        });
-        selectedItemsDiv.appendChild(div);
+    // Fetch items from JSON and populate the menu
+    fetch('menu.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-
-      totalPriceDiv.textContent = `€${totalPrice.toFixed(2)}`;
-    }
-
-    document.getElementById('resetButton').addEventListener('click', function () {
-      selectedItems = {};
-      totalPrice = 0;
-      updateUI();
+      return response.json();
+    })
+    .then(data => {
+      // ...existing code for processing data
+    })
+    .catch(error => {
+      console.log('Fetch problem: ', error);
     });
 
-    if ('addEventListener' in document) {
-      document.addEventListener('DOMContentLoaded', function () {
-        FastClick.attach(document.body);
-      }, false);
+
+      // Attach event listeners to the new buttons
+      attachButtonListeners();
+    });
+
+    function attachButtonListeners() {
+      document.querySelectorAll('.button').forEach(button => {
+        button.addEventListener('click', function () {
+          // ... existing code for adding items and updating the UI
+        });
+      });
     }
-
   </script>
-
 </body>
 
 </html>
