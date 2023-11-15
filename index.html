@@ -225,7 +225,7 @@
     const customPriceInput = document.getElementById('customPriceInput');
     const itemPrice = parseFloat(customPriceInput.value);
 
-    if (isNaN(itemPrice) || itemPrice <= 0) {
+    if (isNaN(itemPrice) || itemPrice === 0) {
       alert('Bitte geben Sie einen gültigen Preis ein.');
       return;
     }
