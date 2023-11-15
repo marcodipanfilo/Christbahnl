@@ -160,6 +160,7 @@
   <script>
     let selectedItems = {};
     let totalPrice = 0;
+    let extrasCounter = 0;
 
     document.querySelectorAll('.button').forEach(button => {
       button.addEventListener('click', function () {
@@ -208,9 +209,11 @@
       button.addEventListener('click', function () {
         selectedItems = {};
         totalPrice = 0;
+        extrasCounter = 0; // Reset the Extras counter
         updateUI();
       });
     });
+
 
     if ('addEventListener' in document) {
       document.addEventListener('DOMContentLoaded', function () {
@@ -227,8 +230,9 @@
       return;
     }
 
-    // Generate a unique identifier for each custom price entry
-    const itemName = `Extras`;
+    // Increment the Extras counter
+    extrasCounter++;
+    const itemName = `Extras ${extrasCounter} €${itemPrice}`;
 
     totalPrice += itemPrice;
     selectedItems[itemName] = { count: 1, itemPrice: itemPrice };
