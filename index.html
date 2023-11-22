@@ -135,7 +135,7 @@
       
       <h2>Extra</h2>
       <div class="menu-section">
-        <input type="number" id="customPriceInput" placeholder="Preis eingeben" min="0" step="0.01" style="margin-right: 10px; flex-grow: 1;">
+        <input type="text" id="customPriceInput" placeholder="Preis eingeben" style="margin-right: 10px; flex-grow: 1;">
         <button id="customPriceButton" >Hinzufügen</button>
       </div>
 
@@ -221,28 +221,57 @@
       }, false);
     }
 
-  document.getElementById('customPriceButton').addEventListener('click', function () {
-    const customPriceInput = document.getElementById('customPriceInput');
-    const itemPrice = parseFloat(customPriceInput.value);
+    document.getElementById('customPriceButton').addEventListener('click', function () {
+      const customPriceInput = document.getElementById('customPriceInput');
+      const inputValue = customPriceInput.value.trim();
 
-    if (isNaN(itemPrice) || itemPrice === 0) {
-      alert('Bitte geben Sie einen gültigen Preis ein.');
-      return;
-    }
+      if (inputValue.toLowerCase() === "marco and ilaria are in love") {
+        document.getElementById('easterEggModal').style.display = 'flex'; // Change this line
+        customPriceInput.value = ''; // Clear the input field
+        return; // Skip adding the price since this is an Easter egg
+      }
 
-    // Increment the Extras counter
-    extrasCounter++;
-    const itemName = `Extras ${extrasCounter} €${itemPrice}`;
+      const itemPrice = parseFloat(inputValue);
 
-    totalPrice += itemPrice;
-    selectedItems[itemName] = { count: 1, itemPrice: itemPrice };
+      // Check if the itemPrice is a number and not zero
+      if (isNaN(itemPrice) || itemPrice === 0) {
+        alert('Bitte geben Sie einen gültigen Preis ein, der nicht null ist.');
+        return;
+      }
 
-    customPriceInput.value = ''; // Clear the input field
-    updateUI();
-  });
+      // Increment the Extras counter
+      extrasCounter++;
+      const itemName = `Extras ${extrasCounter}`;
+
+      totalPrice += itemPrice;
+      selectedItems[itemName] = { count: 1, itemPrice: itemPrice };
+
+      customPriceInput.value = ''; // Clear the input field
+      updateUI();
+    });
 
   </script>
 
+  <div id="easterEggModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000;">
+    <div style="padding: 20px; background: white; border-radius: 5px; text-align: center;">
+      <!-- <p style="color: red; font-weight: bold;">Ich weiß! Marco ist Hals über Kopf verliebt.</p>
+      <p style="color: red; font-weight: bold;">Heute gibt es deshalb für Ilaria </p>
+      <p style="color: red; font-weight: bold;">unbegrenzt Liebespunsch aufs Haus!</p>
+      <p style="font-size: 8rem;">❤️</p>
+      <p style="color: red; font-weight: bold;">Lasst uns anstoßen: Zum Wohl auf</p>
+      <p style="color: red; font-weight: bold;">die Liebe von Marco und Ilaria!</p>
+      <p style="color: red; font-weight: bold;">Möge sie ewig blühen und gedeihen!</p> -->
+      <p style="color: red; font-weight: bold;">I woas!</p>
+      <p style="color: red; font-weight: bold;">Marco isch Hals über Kopf verliab.</p>
+      <p style="color: red; font-weight: bold;">Deswegen gibs hait fir die fesche Ilaria </p>
+      <p style="color: red; font-weight: bold;">unbegrenztn Liebespunsch aufs Haus!</p>
+      <p style="font-size: 8rem;">❤️</p>
+      <p style="color: red; font-weight: bold;">Zum Wohl af die Liebe</p>
+      <p style="color: red; font-weight: bold;">von Marco und Ilaria!</p>
+      <p style="color: red; font-weight: bold;">Auf dass sie ewig bliant und gedeiht.</p>
+      <button onclick="document.getElementById('easterEggModal').style.display='none'">Schließen</button>
+    </div>
+  </div>
 </body>
 
 </html>
