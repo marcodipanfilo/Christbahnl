@@ -225,7 +225,19 @@
       const customPriceInput = document.getElementById('customPriceInput');
       const inputValue = customPriceInput.value.trim();
 
+      if (inputValue === "ULZGPLTISMRALCGGGULRTW") {
+        document.getElementById('secret_module').style.display = 'flex';
+        customPriceInput.value = ''; // Clear the input field
+        return; // Skip adding the price since this is an Easter egg
+      }
+
       if (inputValue.toLowerCase() === "marco and ilaria are in love") {
+        document.getElementById('easterEggModal').style.display = 'flex'; // Change this line
+        customPriceInput.value = ''; // Clear the input field
+        return; // Skip adding the price since this is an Easter egg
+      }
+
+      if (inputValue === "ULZGPLTISMRALCGGULRTW") {
         document.getElementById('easterEggModal').style.display = 'flex'; // Change this line
         customPriceInput.value = ''; // Clear the input field
         return; // Skip adding the price since this is an Easter egg
@@ -251,6 +263,31 @@
     });
 
   </script>
+  <div id="secret_module" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); justify-content: center; align-items: center; z-index: 1000;">
+    <div style="padding: 20px; background: #2b2b2b; border-radius: 5px; text-align: center; color: #c0c0c0;">
+      <p style="color: rgb(47, 0, 255); font-weight: bold;">
+        🌌 This item, priceless, beyond compare,<br>
+        awaits someone with flair, 🧙‍♂️<br>
+        Reserved for one, a special soul,<br>
+        who can decipher the whole. 🔍<br>
+        A cipher of Vigenère's own, 📜<br>
+        where her name is not alone.<br>
+        In this passphrase, entwined and bold,<br>
+        lies a secret to be told. 🗝️<br>
+        <br>
+        But heed this warning, take great care,<br>
+        a flaw within does lay quite bare. ⚠️<br>
+        A letter extra, slipped in by chance,<br>
+        adds to this cryptic dance. 💃<br>
+        Once you solve, with wits so clear,<br>
+        bring the answer back right here. 🧠<br>
+        And in that moment, true and rare,<br>
+        watch as magic fills the air. ✨
+      </p>
+      <button style="background-color: #4c4c4c; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;" onclick="document.getElementById('secret_module').style.display='none'">Close</button>
+    </div>
+  </div>
+
 
   <div id="easterEggModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000;">
     <div style="padding: 20px; background: white; border-radius: 5px; text-align: center;">
@@ -261,10 +298,12 @@
       <p style="color: red; font-weight: bold;">Lasst uns anstoßen: Zum Wohl auf</p>
       <p style="color: red; font-weight: bold;">die Liebe von Marco und Ilaria!</p>
       <p style="color: red; font-weight: bold;">Möge sie ewig blühen und gedeihen!</p> -->
-      <p style="color: red; font-weight: bold;">I woas!</p>
-      <p style="color: red; font-weight: bold;">Marco isch Hals über Kopf verliab.</p>
-      <p style="color: red; font-weight: bold;">Deswegen gibs hait fir die fesche Ilaria </p>
-      <p style="color: red; font-weight: bold;">unbegrenztn Liebespunsch aufs Haus!</p>
+      <p style="color: red; font-weight: bold;">I woas! Oh, hearmor mol zua!</p>
+      <p style="color: red; font-weight: bold;">Marco isch verliab, jo, gonz und guat.</p>
+      <p style="color: red; font-weight: bold;">Hals über Kopf, so stark und klor,</p>
+      <p style="color: red; font-weight: bold;">für Ilaria, die fesche, isch’s heit wohr.</p>
+      <p style="color: red; font-weight: bold;">Drum gibts hait, oh wella Braus,</p>
+      <p style="color: red; font-weight: bold;">für sie en Liebespunsch, gonz umschunst im Haus!</p>      
       <p style="font-size: 8rem;">❤️</p>
       <p style="color: red; font-weight: bold;">Zum Wohl af die Liebe</p>
       <p style="color: red; font-weight: bold;">von Marco und Ilaria!</p>
