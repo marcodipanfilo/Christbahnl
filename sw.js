@@ -2,8 +2,8 @@
 // Online: loads the latest version (so new prices show up) and saves it.
 // Offline or very slow connection: shows the saved copy.
 
-const CACHE = 'christbahnl-v1';
-const PAGES = ['./', './index.html'];
+const CACHE = 'christbahnl-v2';
+const PAGES = ['./', './index.html', './game.js'];
 const TIMEOUT_MS = 3000;
 
 self.addEventListener('install', event => {

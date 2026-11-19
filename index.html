@@ -214,6 +214,8 @@
 
   </div>
 
+  <script src="game.js"></script>
+
   <script>
     // All amounts are kept in whole cents to avoid rounding errors
     let selectedItems = {};
@@ -326,6 +328,12 @@
         document.getElementById('secret_module').style.display = 'flex';
         customPriceInput.value = ''; // Clear the input field
         return; // Skip adding the price since this is an Easter egg
+      }
+
+      if (inputValue.toLowerCase() === "christbahnl") {
+        customPriceInput.value = ''; // Clear the input field
+        window.startChristmasGame(); // Easter egg: game.js
+        return;
       }
 
       if (inputValue.toLowerCase() === "marco and ilaria are in love") {
