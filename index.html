@@ -484,7 +484,7 @@
 
     // Offline support: cache the page so it still opens without internet
     if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-      navigator.serviceWorker.register('sw.js');
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' });
     }
 
   </script>

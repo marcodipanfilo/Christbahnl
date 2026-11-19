@@ -2,12 +2,18 @@
 // Online: loads the latest version (so new prices show up) and saves it.
 // Offline or very slow connection: shows the saved copy.
 
-const CACHE = 'christbahnl-v2';
+// Online requests skip the browser's own cache ('no-cache' asks the server whether
+// the file changed), so a new version shows up on the next reload instead of
+// after up to 10 minutes.
+
+const CACHE = 'christbahnl-v3';
 const PAGES = ['./', './index.html', './game.js'];
 const TIMEOUT_MS = 3000;
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(PAGES)));
+  event.waitUntil(
+    caches.open(CACHE).then(cache => cache.addAll(PAGES.map(page => new Request(page, { cache: 'reload' }))))
+  );
   self.skipWaiting();
 });
 
@@ -26,7 +32,7 @@ self.addEventListener('fetch', event => {
   event.respondWith((async () => {
     const cache = await caches.open(CACHE);
 
-    const fromNetwork = fetch(request).then(response => {
+    const fromNetwork = fetch(request, { cache: 'no-cache' }).then(response => {
       if (response.ok) cache.put(request, response.clone());
       return response;
     });
