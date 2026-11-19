@@ -6,8 +6,8 @@
 // the file changed), so a new version shows up on the next reload instead of
 // after up to 10 minutes.
 
-const CACHE = 'christbahnl-v3';
-const PAGES = ['./', './index.html', './game.js'];
+const CACHE = 'christbahnl-v4';
+const PAGES = ['./', './index.html', './game.js', './hack.js'];
 const TIMEOUT_MS = 3000;
 
 self.addEventListener('install', event => {
