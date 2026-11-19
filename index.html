@@ -2,12 +2,18 @@
 <html>
 
 <head>
-  <meta charset="UTF-8" name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Christbahndl Speise- und Getränkekarte</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+    }
+
+    /* Removes the tap delay on touch devices (replaces FastClick) */
+    button,
+    input {
+      touch-action: manipulation;
     }
 
     .container {
@@ -35,6 +41,8 @@
       height: 100%;
       overflow: hidden;
       background: rgba(224, 255, 255, 0.466);
+      display: flex;
+      flex-direction: column;
     }
 
     .total-wrapper {
@@ -54,8 +62,41 @@
 
     .scrollable-items {
       overflow-y: auto;
-      height: calc(100% - 160px);
-      /* Adjust this value */
+      flex: 1;
+      min-height: 0;
+    }
+
+    .change-calculator {
+      padding: 5px;
+      text-align: center;
+    }
+
+    .change-calculator input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .cash-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cash-button {
+      margin: 3px;
+      padding: 8px 0;
+      font-size: 16px;
+    }
+
+    #changeAmount {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    #changeAmount.missing {
+      color: #c00;
     }
 
     .button {
@@ -140,7 +181,7 @@
       
       <h2>Extra</h2>
       <div class="menu-section">
-        <input type="text" id="customPriceInput" placeholder="Preis eingeben" style="margin-right: 10px; flex-grow: 1;">
+        <input type="text" inputmode="decimal" id="customPriceInput" placeholder="Preis eingeben" style="margin-right: 10px; flex-grow: 1;">
         <button id="customPriceButton" >Hinzufügen</button>
       </div>
 
@@ -151,26 +192,49 @@
         <button id="resetButtonTop" class="reset-button">Zurücksetzen</button>
         <div id="totalWrapper" class="total-wrapper">
           <h3>Gesamt:</h3>
-          <span id="totalPrice">€0.00</span>
+          <span id="totalPrice">0,00 €</span>
         </div>
       </div>
       <div class="scrollable-items" id="selectedItems"></div>
+      <div class="change-calculator">
+        <input type="text" inputmode="decimal" id="givenInput" placeholder="Gegeben">
+        <div class="cash-buttons">
+          <button class="cash-button" data-amount="0.5">0,5</button>
+          <button class="cash-button" data-amount="1">1</button>
+          <button class="cash-button" data-amount="5">5</button>
+          <button class="cash-button" data-amount="10">10</button>
+          <button class="cash-button" data-amount="20">20</button>
+          <button class="cash-button" data-amount="50">50</button>
+        </div>
+        <div id="changeLabel">Rückgeld:</div>
+        <div id="changeAmount">–</div>
+      </div>
       <button id="resetButtonBottom" class="reset-button">Zurücksetzen</button>
     </div>
 
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
-
   <script>
+    // All amounts are kept in whole cents to avoid rounding errors
     let selectedItems = {};
     let totalPrice = 0;
     let extrasCounter = 0;
 
+    const euro = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' });
+    const formatCents = cents => euro.format(cents / 100);
+
+    // Reads "3,50", "3.50", "3,50 €" or "€3" as cents; returns NaN for anything else
+    function parseCents(text) {
+      const cleaned = text.replace(/€/g, '').replace(/\s/g, '').replace(',', '.');
+      if (cleaned === '') return NaN;
+      const value = Number(cleaned);
+      return isNaN(value) ? NaN : Math.round(value * 100);
+    }
+
     document.querySelectorAll('.button').forEach(button => {
       button.addEventListener('click', function () {
         const itemName = this.getAttribute('data-name');
-        const itemPrice = parseFloat(this.getAttribute('data-price'));
+        const itemPrice = Math.round(parseFloat(this.getAttribute('data-price')) * 100);
 
         totalPrice += itemPrice;
 
@@ -207,24 +271,52 @@
         selectedItemsDiv.appendChild(div);
       }
 
-      totalPriceDiv.textContent = `€${totalPrice.toFixed(2)}`;
+      totalPriceDiv.textContent = formatCents(totalPrice);
+      updateChange();
     }
+
+    // Change calculator: shows what to give back, or what is still missing
+    const givenInput = document.getElementById('givenInput');
+
+    function updateChange() {
+      const label = document.getElementById('changeLabel');
+      const amount = document.getElementById('changeAmount');
+      const given = parseCents(givenInput.value);
+
+      if (isNaN(given)) {
+        label.textContent = 'Rückgeld:';
+        amount.textContent = '–';
+        amount.classList.remove('missing');
+        return;
+      }
+
+      const change = given - totalPrice;
+      label.textContent = change < 0 ? 'Fehlt:' : 'Rückgeld:';
+      amount.textContent = formatCents(Math.abs(change));
+      amount.classList.toggle('missing', change < 0);
+    }
+
+    givenInput.addEventListener('input', updateChange);
+
+    // Each cash button adds its amount to what was given (e.g. 20 + 5 = 25)
+    document.querySelectorAll('.cash-button').forEach(button => {
+      button.addEventListener('click', function () {
+        const current = parseCents(givenInput.value);
+        const given = (isNaN(current) ? 0 : current) + Number(this.getAttribute('data-amount')) * 100;
+        givenInput.value = given % 100 === 0 ? String(given / 100) : (given / 100).toFixed(2).replace('.', ',');
+        updateChange();
+      });
+    });
 
     document.querySelectorAll('.reset-button').forEach(button => {
       button.addEventListener('click', function () {
         selectedItems = {};
         totalPrice = 0;
         extrasCounter = 0; // Reset the Extras counter
+        givenInput.value = '';
         updateUI();
       });
     });
-
-
-    if ('addEventListener' in document) {
-      document.addEventListener('DOMContentLoaded', function () {
-        FastClick.attach(document.body);
-      }, false);
-    }
 
     document.getElementById('customPriceButton').addEventListener('click', function () {
       const customPriceInput = document.getElementById('customPriceInput');
@@ -248,7 +340,7 @@
         return; // Skip adding the price since this is an Easter egg
       }
 
-      const itemPrice = parseFloat(inputValue);
+      const itemPrice = parseCents(inputValue);
 
       // Check if the itemPrice is a number and not zero
       if (isNaN(itemPrice) || itemPrice === 0) {
@@ -266,6 +358,11 @@
       customPriceInput.value = ''; // Clear the input field
       updateUI();
     });
+
+    // Offline support: cache the page so it still opens without internet
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+      navigator.serviceWorker.register('sw.js');
+    }
 
   </script>
   <div id="secret_module" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); justify-content: center; align-items: center; z-index: 1000;">
